@@ -36,3 +36,8 @@ final class NetworkingTests: XCTestCase {
 ```
 
 Note: Apple has actually introduced async/await versions of this as a part of foundation on iOS 15 and corresponding OSes, so this is only to demonstrate how easy it is to turn a Combine publisher into an `async` method.
+
+
+----
+
+Contributions and more features, such as support for async sequences will be added.
