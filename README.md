@@ -41,3 +41,5 @@ Note: Apple has actually introduced async/await versions of this as a part of fo
 ----
 
 Contributions and more features, such as support for async sequences will be added.
+
+See this package and thousands of others on [swiftpack.co](https://swiftpack.co/package/petrpavlik/CombineToAsyncAwait)
