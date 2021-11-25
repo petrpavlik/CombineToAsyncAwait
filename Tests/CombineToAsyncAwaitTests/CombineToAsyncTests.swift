@@ -1,6 +1,6 @@
 import XCTest
 import Combine
-@testable import CombineToAsync
+@testable import CombineToAsyncAwait
 
 @available(iOS 15.0, *)
 @available(macOS 12.0, *)
@@ -39,4 +39,38 @@ func testExample() async {
             XCTAssertEqual(error as? TestError, .testError)
         }
     }
+
+    func testExample4() async {
+        let publisher = [0, 1, 2].publisher
+
+        var valuesResult = [Int]()
+        for await i in publisher.values {
+            valuesResult.append(i)
+        }
+
+        var asyncStreamResult = [Int]()
+        for await i in publisher.asyncStream() {
+            asyncStreamResult.append(i)
+        }
+
+        XCTAssertEqual(valuesResult, [0, 1, 2])
+        XCTAssertEqual(asyncStreamResult, [0, 1, 2])
+    }
+
+//    func testExample5() async {
+//        let subject = PassthroughSubject<Int, Error>()
+//
+//        var valuesResult = [Int]()
+//        for await i in publisher.values {
+//            valuesResult.append(i)
+//        }
+//
+//        var asyncStreamResult = [Int]()
+//        for await i in publisher.asyncStream() {
+//            asyncStreamResult.append(i)
+//        }
+//
+//        XCTAssertEqual(valuesResult, [0, 1, 2])
+//        XCTAssertEqual(asyncStreamResult, [0, 1, 2])
+//    }
 }
