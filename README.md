@@ -4,7 +4,7 @@ Adds `try await myCombineStream.firstValue` for convenient usage because there i
 - https://developer.apple.com/documentation/combine/publisher/values-1dm9r
 - https://developer.apple.com/documentation/combine/publisher/values-v7nz
 
-You can use https://github.com/JohnSundell/AsyncCompatibilityKit to have `.values` backported to iOS 13 and related macOS.
+You can use [JohnSundell/AsyncCompatibilityKit](https://swiftpack.co/package/JohnSundell/AsyncCompatibilityKit) to have `.values` backported to iOS 13 and related macOS.
 
 ## Example
 Let's convert a Combine publisher provided by Apple to make a network request into async/await
