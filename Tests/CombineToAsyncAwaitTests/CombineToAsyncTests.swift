@@ -2,17 +2,15 @@ import XCTest
 import Combine
 @testable import CombineToAsyncAwait
 
-@available(iOS 15.0, *)
-@available(macOS 12.0, *)
 final class CombineToAsyncTests: XCTestCase {
 
     enum TestError: Error {
         case testError
     }
 
-func testExample() async {
+    func testExample() async {
         let publisher = Just(true)
-        let value = await publisher.asyncValue()
+        let value = await publisher.firstValue
         XCTAssertEqual(value, true)
     }
 
@@ -25,52 +23,24 @@ func testExample() async {
             }
         }
 
-        let value = await publisher.asyncValue()
+        let value = await publisher.firstValue
         XCTAssertEqual(value, true)
+    }
+
+    func testPublisherEmitsMultipleValues() async {
+        let publisher = [1, 2].publisher
+        let value = await publisher.firstValue
+        XCTAssertEqual(value, 1)
     }
 
     func testExample3() async {
         let publisher = Fail<Bool, Error>(error: TestError.testError)
 
         do {
-            _ = try await publisher.asyncValue()
+            _ = try await publisher.firstValue
             XCTFail("this was supposed to throw")
         } catch {
             XCTAssertEqual(error as? TestError, .testError)
         }
     }
-
-    func testExample4() async {
-        let publisher = [0, 1, 2].publisher
-
-        var valuesResult = [Int]()
-        for await i in publisher.values {
-            valuesResult.append(i)
-        }
-
-        var asyncStreamResult = [Int]()
-        for await i in publisher.asyncStream() {
-            asyncStreamResult.append(i)
-        }
-
-        XCTAssertEqual(valuesResult, [0, 1, 2])
-        XCTAssertEqual(asyncStreamResult, [0, 1, 2])
-    }
-
-//    func testExample5() async {
-//        let subject = PassthroughSubject<Int, Error>()
-//
-//        var valuesResult = [Int]()
-//        for await i in publisher.values {
-//            valuesResult.append(i)
-//        }
-//
-//        var asyncStreamResult = [Int]()
-//        for await i in publisher.asyncStream() {
-//            asyncStreamResult.append(i)
-//        }
-//
-//        XCTAssertEqual(valuesResult, [0, 1, 2])
-//        XCTAssertEqual(asyncStreamResult, [0, 1, 2])
-//    }
 }
