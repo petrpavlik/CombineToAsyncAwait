@@ -21,10 +21,10 @@ public extension Publisher where Failure == Never {
 
 public extension Publisher {
 
+    /// Retrieve the first emitted value asynchronously, or an error.
+    ///
+    /// Any following emissions are ignored.
     var firstValue: Output {
-        /// Retrieve the first emitted value asynchronously, or an error.
-        ///
-        /// Any following emissions are ignored.
         get async throws {
             try await withCheckedThrowingContinuation { c in
                 var cancellable: AnyCancellable?

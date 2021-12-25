@@ -1,5 +1,5 @@
 # CombineToAsyncAwait
-Adds `try await myCombineStream.firstValue` for convenient usage because there is no Apple-provided API for it, only to turn a Combine stream into AsyncStream using `.values`.
+Adds `try await myCombineStream.firstValue` and `await myCombineStream.firstResult` for convenient usage because there is no Apple-provided API for it, only to turn a Combine stream into AsyncStream using `.values`.
 
 - https://developer.apple.com/documentation/combine/publisher/values-1dm9r
 - https://developer.apple.com/documentation/combine/publisher/values-v7nz
@@ -37,6 +37,23 @@ final class NetworkingTests: XCTestCase {
 ```
 
 Note: Apple has actually introduced async/await versions of this as a part of foundation on iOS 15 and corresponding OSes, so this is only to demonstrate how easy it is to turn a Combine publisher into an `async` method.
+
+### Keeping the Error Type
+
+One of the disadvantages of async/await is that the error gets erased, you can use `firstResult` instead that returns a `Result` type where the error type matches the combine publisher.
+
+```
+let result = await myApiProvider.userProfile(id: 123).firstResult
+switch result {
+case .success(let user):
+    // ...
+case .failure(let fetchUserError):
+    switch fetchUserError {
+    case .notFound:
+        // ...
+    }
+}
+```
 
 
 ----

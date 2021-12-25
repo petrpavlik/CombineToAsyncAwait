@@ -30,7 +30,9 @@ final class CombineToAsyncTests: XCTestCase {
     func testPublisherEmitsMultipleValues() async {
         let publisher = [1, 2].publisher
         let value = await publisher.firstValue
+        let result = await publisher.firstResult
         XCTAssertEqual(value, 1)
+        XCTAssertEqual(result, .success(1))
     }
 
     func testExample3() async {
@@ -42,5 +44,19 @@ final class CombineToAsyncTests: XCTestCase {
         } catch {
             XCTAssertEqual(error as? TestError, .testError)
         }
+    }
+
+    func testResultSuccess() async {
+        let publisher = Just(true)
+
+        let result = await publisher.firstResult
+        XCTAssertEqual(result, .success(true))
+    }
+
+    func testResultFailure() async {
+        let publisher = Fail<Bool, TestError>(error: TestError.testError)
+
+        let result = await publisher.firstResult
+        XCTAssertEqual(result, .failure(.testError))
     }
 }
