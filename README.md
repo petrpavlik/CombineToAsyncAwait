@@ -42,7 +42,7 @@ Note: Apple has actually introduced async/await versions of this as a part of fo
 
 One of the disadvantages of async/await is that the error gets erased, you can use `firstResult` instead that returns a `Result` type where the error type matches the combine publisher.
 
-```
+```swift
 let result = await myApiProvider.userProfile(id: 123).firstResult
 switch result {
 case .success(let user):
