@@ -55,6 +55,11 @@ case .failure(let fetchUserError):
 }
 ```
 
+### Await Stream Completion
+
+For streams of `void` value, you may want to await stream completion instead of a value.
+
+
 
 ----
 

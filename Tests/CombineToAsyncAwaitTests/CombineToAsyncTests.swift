@@ -59,4 +59,46 @@ final class CombineToAsyncTests: XCTestCase {
         let result = await publisher.firstResult
         XCTAssertEqual(result, .failure(.testError))
     }
+
+    func testNonThrowingCompleted() async {
+        let publisher = Just(())
+        await publisher.completed()
+    }
+
+    func testThrowingCompletedSucceeded() async throws {
+        let publisher = Just(()).setFailureType(to: TestError.self)
+        try await publisher.completed()
+    }
+
+    func testThrowingCompletedFailed() async throws {
+        let publisher = Fail<Bool, TestError>(error: TestError.testError)
+        do {
+            try await publisher.completed()
+            XCTFail("should have thrown")
+        } catch {
+
+        }
+    }
+
+    func testCompletedResultSucceeded() async {
+        let publisher = Just(()).setFailureType(to: TestError.self)
+        let result = await publisher.completedResult
+        switch result {
+        case .failure:
+            XCTFail("should have succeeded")
+        case.success:
+            break
+        }
+    }
+
+    func testCompletedResultFailed() async {
+        let publisher = Fail<Bool, TestError>(error: TestError.testError)
+        let result = await publisher.completedResult
+        switch result {
+        case .failure:
+            break
+        case.success:
+            XCTFail("should have failed")
+        }
+    }
 }
