@@ -1,5 +1,5 @@
 # CombineToAsyncAwait
-Adds `try await myCombineStream.firstValue` and `await myCombineStream.firstResult` for convenient usage because there is no Apple-provided API for it, only to turn a Combine stream into AsyncStream using `.values`.
+Adds `try await myCombineStream.firstValue`, `await myCombineStream.firstResult` and `await myCombineStream.completed()` for convenient usage because there is no Apple-provided API for it, only to turn a Combine stream into AsyncStream using `.values`.
 
 - https://developer.apple.com/documentation/combine/publisher/values-1dm9r
 - https://developer.apple.com/documentation/combine/publisher/values-v7nz
